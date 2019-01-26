@@ -12,6 +12,7 @@ public class SceneLoader : MonoBehaviour
     public GameObject[] PrefabsToUse;
 
     private bool hasOpened = false;
+    private bool gameOver = false;
     private int currentPrefabId;
 
     private List<GameObject> prefabList;
@@ -42,46 +43,54 @@ public class SceneLoader : MonoBehaviour
 
     private void Update()
     {
-        switch (door.DoorState)
+        if (!gameOver)
         {
-            case FridgeDoor.State.Closed:
-                if (hasOpened)
-                {
-                    if (!currentPrefab)
+            switch (door.DoorState)
+            {
+                case FridgeDoor.State.Closed:
+                    if (hasOpened)
                     {
-                        hasOpened = false;
-                        --untilEvent;
-
-                        if (untilEvent == 0)
+                        if (!currentPrefab)
                         {
-                            currentPrefabId = Random.Range(0, prefabList.Count);
-                            currentPrefab = prefabList[currentPrefabId];
-                            currentPrefab.SetActive(true);
+                            hasOpened = false;
+                            --untilEvent;
+
+                            if (untilEvent == 0)
+                            {
+                                currentPrefabId = Random.Range(0, prefabList.Count);
+                                currentPrefab = prefabList[currentPrefabId];
+                                currentPrefab.SetActive(true);
+                            }
+                        }
+                        else
+                        {
+                            hasOpened = false;
+                            untilEvent = (int)Random.Range(BetweenRange.x, BetweenRange.y);
+
+                            Destroy(currentPrefab);
+                            currentPrefab = null;
+
+                            prefabList.Remove(prefabList[currentPrefabId]);
                         }
                     }
-                    else
-                    {
-                        hasOpened = false;
-                        untilEvent = (int)Random.Range(BetweenRange.x, BetweenRange.y);
+                    break;
 
-                        Destroy(currentPrefab);
-                        currentPrefab = null;
+                case FridgeDoor.State.Slighly:
+                    break;
 
-                        prefabList.Remove(prefabList[currentPrefabId]);
-                    }
-                }
-                break;
+                case FridgeDoor.State.Open:
+                    if (!hasOpened) hasOpened = true;
+                    break;
 
-            case FridgeDoor.State.Slighly:
-                break;
+                default:
+                    Debug.LogError("Door's cronked yo!");
+                    break;
+            }
+        }
 
-            case FridgeDoor.State.Open:
-                if (!hasOpened) hasOpened = true;
-                break;
-
-            default:
-                Debug.LogError("Door's cronked yo!");
-                break;
+        if(prefabList.Count == 0)
+        {
+            gameOver = true;
         }
     }
 }
