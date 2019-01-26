@@ -28762,7 +28762,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh49554
+  m_Name: pb_Mesh5360
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -40587,6 +40587,7 @@ GameObject:
   - component: {fileID: 1968308640}
   - component: {fileID: 1968308639}
   - component: {fileID: 1968308641}
+  - component: {fileID: 1968308642}
   m_Layer: 0
   m_Name: Ovi
   m_TagString: Untagged
@@ -40646,6 +40647,26 @@ MonoBehaviour:
   DoorAnimator: {fileID: 1968308639}
   ActionDelay: 0.333
   Dampening: 500
+  DoorState: 0
+--- !u!114 &1968308642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968308638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 252c45bdaaa013c4983df359f6b31e6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  untilEvent: 1
+  BetweenRange: {x: 1, y: 2}
+  SpawnPoint: {x: 0.0924418, y: 1.448, z: -6.431}
+  currentPrefab: {fileID: 0}
+  PrefabsToUse:
+  - {fileID: 902429673520243151, guid: 00cd2b84080004046b7ffb3cff90e9df, type: 3}
+  - {fileID: 8606895811504841251, guid: eee58aa802520f84dbaf33b9c056af9c, type: 3}
 --- !u!1 &1971103120
 GameObject:
   m_ObjectHideFlags: 0
@@ -40991,7 +41012,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh49480
+  m_Name: pb_Mesh5286
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
