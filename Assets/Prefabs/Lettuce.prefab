@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 6587795416339156874}
   - component: {fileID: 1052696890815173748}
   - component: {fileID: 1588065189043213940}
-  - component: {fileID: 8119539836446313955}
   - component: {fileID: 3613326976833035482}
+  - component: {fileID: 1936350092733256582}
   m_Layer: 0
   m_Name: Lettuce
   m_TagString: Untagged
@@ -27,9 +27,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1243716319642371516}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 4.4048867, y: -0.28750452, z: -6.489755}
-  m_LocalScale: {x: 48.11965, y: 48.11965, z: 48.11965}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -79,19 +79,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &8119539836446313955
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1243716319642371516}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.0018745904
-  m_Center: {x: 1.1641532e-10, y: -1.2897563e-17, z: 0.0018151703}
 --- !u!54 &3613326976833035482
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -108,3 +95,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!135 &1936350092733256582
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243716319642371516}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.09020463
+  m_Center: {x: 0.0000000037252903, y: 0.08734537, z: 0}
