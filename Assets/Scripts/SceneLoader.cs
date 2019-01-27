@@ -103,4 +103,15 @@ public class SceneLoader : MonoBehaviour
             prefabList.Add(temp);
         }
     }
+
+    public void Play()
+    {
+        gameObject.GetComponent<SceneLoader>().enabled = true;
+        gameObject.GetComponent<FridgeDoor>().enabled = true;
+    }
+
+    public void HideMenu(GameObject menu)
+    {
+        menu.SetActive(false);
+    }
 }
