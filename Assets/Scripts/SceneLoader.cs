@@ -5,9 +5,10 @@ using UnityEngine;
 public class SceneLoader : MonoBehaviour
 {
     public int untilEvent = 10;
-    public Vector2 BetweenRange;
 
+    public Vector2 BetweenRange;
     public Vector3 SpawnPoint;
+
     public GameObject currentPrefab;
     public GameObject[] PrefabsToUse;
 
@@ -16,12 +17,11 @@ public class SceneLoader : MonoBehaviour
     private int currentPrefabId;
 
     private List<GameObject> prefabList;
+
     private FridgeDoor door;
 
     private void Start()
     {
-        prefabList = new List<GameObject>();
-
         //Get ref to door scirpt
         if (!door)
         {
@@ -32,17 +32,12 @@ public class SceneLoader : MonoBehaviour
             Debug.LogError("FridgeDoor script not found! Make sure it's on the same object!");
         }
 
-        //Pool event prefabs
-        for (int i = 0; i < PrefabsToUse.Length; i++)
-        {
-            GameObject temp = Instantiate(PrefabsToUse[i], SpawnPoint, Quaternion.identity);
-            temp.SetActive(false);
-            prefabList.Add(temp);
-        }
+        PoolPrefabs();
     }
 
     private void Update()
     {
+        //Game loop
         if (!gameOver)
         {
             switch (door.DoorState)
@@ -86,11 +81,37 @@ public class SceneLoader : MonoBehaviour
                     Debug.LogError("Door's cronked yo!");
                     break;
             }
+
+
+            if (prefabList.Count == 0)
+            {
+                gameOver = true;
+                door.GameOver();
+            }
         }
 
-        if(prefabList.Count == 0)
+    }
+
+    private void PoolPrefabs()
+    {
+        prefabList = new List<GameObject>();
+
+        for (int i = 0; i < PrefabsToUse.Length; i++)
         {
-            gameOver = true;
+            GameObject temp = Instantiate(PrefabsToUse[i], SpawnPoint, Quaternion.identity);
+            temp.SetActive(false);
+            prefabList.Add(temp);
         }
+    }
+
+    public void Play()
+    {
+        gameObject.GetComponent<SceneLoader>().enabled = true;
+        gameObject.GetComponent<FridgeDoor>().enabled = true;
+    }
+
+    public void HideMenu(GameObject menu)
+    {
+        menu.SetActive(false);
     }
 }

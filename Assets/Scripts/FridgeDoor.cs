@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class FridgeDoor : MonoBehaviour
 {
-    public Animator DoorAnimator;
     public float ActionDelay;
     public float Dampening;
 
-    public enum State { Closed, Slighly, Open}
+    public enum State { Closed, Slighly, Open }
     public State DoorState = State.Closed;
 
+    public Animator DoorAnimator;
+
+    private bool gameOver = false;
     private bool slamming;
     private float nextAction;
     private float openness;
+
+    private GameObject hand;
+    private GameObject handle;
+
     private Vector3 mousePosDelta;
     private Vector3 mousePrevPos;
 
@@ -21,9 +27,32 @@ public class FridgeDoor : MonoBehaviour
     private void Start()
     {
         nextAction = ActionDelay;
+
+        hand = GameObject.Find("Hand");
+        handle = GameObject.Find("kahva");
     }
 
     private void Update()
+    {
+        DoorAction();
+
+        SetDoorOpennes();
+        
+        MouseDelta();
+
+        //Update door animation
+        DoorAnimator.SetFloat("Openness", openness);
+    }
+
+    private void FixedUpdate()
+    {
+        if (nextAction > 0)
+        {
+            nextAction -= Time.deltaTime;
+        }
+    }
+
+    private void DoorAction()
     {
         if (DoorAnimator.GetFloat("Openness") < 0)//Door is closed
         {
@@ -72,19 +101,11 @@ public class FridgeDoor : MonoBehaviour
                 }
             }
         }
+    }
 
-            if (Input.GetMouseButton(0))
-            {
-                mousePosDelta = Input.mousePosition - mousePrevPos;
-                mousePrevPos = Input.mousePosition;
-            }
-            else
-            {
-                mousePosDelta = Vector3.zero;
-                mousePrevPos = Input.mousePosition;
-            }
-
-        if (nextAction < 0)
+    private void SetDoorOpennes()
+    {
+        if (nextAction < 0 && !gameOver)
         {
             if (!slamming)
             {
@@ -96,14 +117,27 @@ public class FridgeDoor : MonoBehaviour
                 DoorState = State.Closed;
             }
         }
-            DoorAnimator.SetFloat("Openness", openness);
     }
 
-    private void FixedUpdate()
+    private void MouseDelta()
     {
-        if (nextAction > 0)
+        if (Input.GetMouseButton(0))
         {
-            nextAction -= Time.deltaTime;
+            mousePosDelta = Input.mousePosition - mousePrevPos;
+            mousePrevPos = Input.mousePosition;
+        }
+        else
+        {
+            mousePosDelta = Vector3.zero;
+            mousePrevPos = Input.mousePosition;
         }
     }
+
+    public void GameOver()
+    {
+        gameOver = true;
+
+        handle.transform.SetParent(hand.transform);
+    }
+
 }
