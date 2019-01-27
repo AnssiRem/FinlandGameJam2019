@@ -12,10 +12,17 @@ public class FridgeDoor : MonoBehaviour
 
     public Animator DoorAnimator;
 
+    public AudioClip open;
+    public AudioClip close;
+    public AudioClip slam;
+
     private bool gameOver = false;
     private bool slamming;
+    private bool hasClosed;
     private float nextAction;
     private float openness;
+
+    private AudioSource audioS;
 
     private GameObject hand;
     private GameObject handle;
@@ -28,6 +35,8 @@ public class FridgeDoor : MonoBehaviour
     {
         nextAction = ActionDelay;
 
+        audioS = gameObject.GetComponent<AudioSource>();
+
         hand = GameObject.Find("Hand");
         handle = GameObject.Find("kahva");
     }
@@ -37,7 +46,7 @@ public class FridgeDoor : MonoBehaviour
         DoorAction();
 
         SetDoorOpennes();
-        
+
         MouseDelta();
 
         //Update door animation
@@ -58,6 +67,13 @@ public class FridgeDoor : MonoBehaviour
         {
             openness = 0;
             DoorState = State.Closed;
+
+            if (!hasClosed)
+            {
+                PlaySound(2);
+            }
+
+            hasClosed = true;
         }
         else if (DoorAnimator.GetFloat("Openness") >= 1)//Door is fully open
         {
@@ -70,6 +86,8 @@ public class FridgeDoor : MonoBehaviour
                 {
                     openness = 0;
 
+                    PlaySound(3);
+
                     slamming = true;
                     DoorAnimator.SetTrigger("Slam");
                     DoorAnimator.SetBool("HandOn", false);
@@ -80,6 +98,12 @@ public class FridgeDoor : MonoBehaviour
         else
         {
             DoorState = State.Slighly;
+
+            if (hasClosed)
+            {
+                PlaySound(1);
+                hasClosed = false;
+            }
 
             if (nextAction < 0)
             {
@@ -138,6 +162,25 @@ public class FridgeDoor : MonoBehaviour
         gameOver = true;
 
         handle.transform.SetParent(hand.transform);
+    }
+
+    private void PlaySound(int id)
+    {
+        switch (id)
+        {
+            case 1:
+                audioS.clip = open;
+                audioS.PlayOneShot(audioS.clip);
+                break;
+            case 2:
+                audioS.clip = close;
+                audioS.PlayOneShot(audioS.clip);
+                break;
+            case 3:
+                audioS.clip = slam;
+                audioS.PlayOneShot(audioS.clip);
+                break;
+        }
     }
 
 }
